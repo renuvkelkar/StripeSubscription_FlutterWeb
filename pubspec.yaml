@@ -39,6 +39,7 @@ dependencies:
   cloud_firestore:
   firebase_core:
   firebase_auth:
+  flutter_stripe:
 
   cloud_firestore_web:
   url_strategy:
