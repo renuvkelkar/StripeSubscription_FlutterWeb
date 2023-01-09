@@ -41,7 +41,7 @@ class _SubscriptionState extends State<Subscription> {
       builder: (BuildContext context,
           AsyncSnapshot<_CheckoutSessionSnapshot> snapshot) {
         if (snapshot.connectionState != ConnectionState.active) {
-          return const Text('Loading');
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError || snapshot.hasData == false) {
           return const Text('Something went wrong');
         }
@@ -57,7 +57,7 @@ class _SubscriptionState extends State<Subscription> {
             ),
           );
         } else {
-          return const Text('Loading');
+          return const Center(child: CircularProgressIndicator());
         }
       },
     );

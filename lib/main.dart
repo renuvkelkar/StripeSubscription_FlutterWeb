@@ -1,9 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe_web_payment/loginPage.dart';
+import 'package:flutter_stripe_web_payment/success.dart';
 import 'package:flutter_stripe_web_payment/test.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:go_router/go_router.dart';
 
+import 'cancel.dart';
+import 'constant.dart';
 import 'dashboard.dart';
 
 Future<void> main() async {
@@ -11,41 +15,57 @@ Future<void> main() async {
 
   await Firebase.initializeApp(
       options: const FirebaseOptions(
-          apiKey: "AIzaSyCvqF6OkACnz2cHyRKxl2mCwjCbgJy4rU4",
-          authDomain: "flutterstripeweb.firebaseapp.com",
-          projectId: "flutterstripeweb",
-          storageBucket: "flutterstripeweb.appspot.com",
-          messagingSenderId: "1038918353624",
-          appId: "1:1038918353624:web:7d16be2720370cabd28dad",
-          measurementId: "G-TN74PDHH08"));
+          apiKey: Constants.apiKey,
+          authDomain: Constants.authDomain,
+          projectId: Constants.projectId,
+          storageBucket: Constants.storageBucket,
+          messagingSenderId: Constants.messagingSenderId,
+          appId: Constants.appId,
+          measurementId: Constants.measurementId));
   usePathUrlStrategy();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final GoRouter _router = GoRouter(
+    routes: <RouteBase>[
+      GoRoute(
+        path: '/',
+        builder: (BuildContext context, GoRouterState state) {
+          return LoginPage();
+        },
+      ),
+      GoRoute(
+        path: '/dashBoard',
+        builder: (BuildContext context, GoRouterState state) {
+          return const DashboardPage();
+        },
+      ),
+      GoRoute(
+        path: '/success',
+        builder: (BuildContext context, GoRouterState state) {
+          return SuccessPage();
+        },
+      ),
+      GoRoute(
+        path: '/Cancel',
+        builder: (BuildContext context, GoRouterState state) {
+          return CancelPage();
+        },
+      ),
+    ],
+  );
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: LoginPage());
-  }
-}
-
-class SuccessPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          'Success',
-          style: Theme.of(context).textTheme.headline1,
-        ),
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routerConfig: _router,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
     );
   }

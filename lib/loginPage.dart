@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe_web_payment/dashboard.dart';
 import 'package:flutter_stripe_web_payment/test.dart';
 import 'package:flutter_stripe_web_payment/utils/firebase_auth.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -31,107 +32,162 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
+      backgroundColor: Colors.white,
       body: FutureBuilder(
         future: _initializeFirebase(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return Form(
-              key: _formKey,
-              child: Center(
-                child: Container(
-                  color: Colors.teal,
-                  height: 500,
-                  width: 500,
+            return Row(
+              children: [
+                Expanded(
                   child: Column(
-                    children: <Widget>[
-                      // TextFormField(
-                      //     controller: _nameTextController,
-                      //     decoration: InputDecoration(label: Text("Name"))),
-                      TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        controller: _emailTextController,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          hintText: 'Email',
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0xffb21a583),
-                            ),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0xffb21a583),
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                        ),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 20,
                       ),
-                      // TextFormField(
-                      //     controller: _emailTextController,
-                      //     decoration: InputDecoration(label: Text("Email"))),
-
-                      SizedBox(height: 8.0),
-                      TextFormField(
-                        keyboardType: TextInputType.text,
-                        controller: _passwordTextController,
-                        obscureText: _obscureText,
-                        decoration: InputDecoration(
-                          hintText: 'Password',
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0xffb21a583),
-                            ),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0xffb21a583),
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          suffixIcon: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _obscureText = !_obscureText;
-                              });
-                            },
-                            child: Icon(_obscureText
-                                ? Icons.visibility
-                                : Icons.visibility_off),
-                          ),
-                        ),
-                      ),
-                      // TextFormField(
-                      //     controller: _passwordTextController,
-                      //     decoration: InputDecoration(label: Text("Password"))),
-                      SizedBox(height: 8.0),
-                      ElevatedButton(
-                        onPressed: () async {
-                          User? user = await FireAuth.signInUsingEmailPassword(
-                            email: _emailTextController.text,
-                          );
-                          if (user != null) {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => DashboardPage()),
-                            );
-                          }
-                        },
+                      const Center(
                         child: Text(
-                          'Sign In',
-                          style: TextStyle(color: Colors.white),
+                          textAlign: TextAlign.center,
+                          "Firebase Stripe Extension with \n Flutter Web",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
                         ),
-                      )
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      Image.asset("assets/images/payment.png"),
                     ],
                   ),
                 ),
-              ),
+                Expanded(
+                  child: Form(
+                    key: _formKey,
+                    child: Center(
+                      child: Container(
+                        color: Colors.orangeAccent,
+                        // height: MediaQuery.of(context).size.height,
+                        // width: MediaQuery.of(context).size.height,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              const Text(
+                                "Login Form",
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                              const SizedBox(height: 30),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
+                                child: TextFormField(
+                                  keyboardType: TextInputType.emailAddress,
+                                  controller: _emailTextController,
+                                  decoration: InputDecoration(
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    hintText: 'Email',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Colors.white,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Colors.white,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 15),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
+                                child: TextFormField(
+                                  keyboardType: TextInputType.text,
+                                  controller: _passwordTextController,
+                                  obscureText: _obscureText,
+                                  decoration: InputDecoration(
+                                    hintText: 'Password',
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Colors.white,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Colors.white,
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    suffixIconColor: Colors.orangeAccent,
+                                    suffixIcon: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _obscureText = !_obscureText;
+                                        });
+                                      },
+                                      child: Icon(
+                                        _obscureText
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        color: Colors.orangeAccent,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.white, // background
+                                ),
+                                onPressed: () async {
+                                  User? user =
+                                      await FireAuth.signInUsingEmailPassword(
+                                    email: _emailTextController.text,
+                                  );
+                                  if (user != null) {
+                                    context.go('/dashBoard');
+                                    // Navigator.of(context).pushReplacement(
+                                    //   MaterialPageRoute(
+                                    //       builder: (context) =>
+                                    //           DashboardPage()),
+                                    // );
+                                  }
+                                },
+                                child: const Text(
+                                  'Sign In',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             );
           }
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         },
