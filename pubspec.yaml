@@ -44,7 +44,7 @@ dependencies:
   cloud_firestore_web:
   url_strategy:
   go_router:
-  shared_preferences: ^2.0.15
+
 
 dev_dependencies:
   flutter_test:

@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe_web_payment/loginPage.dart';
 import 'package:flutter_stripe_web_payment/success.dart';
-import 'package:flutter_stripe_web_payment/test.dart';
+
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:go_router/go_router.dart';
 
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         },
       ),
       GoRoute(
-        path: '/dashBoard',
+        path: '/dashboard',
         builder: (BuildContext context, GoRouterState state) {
           return const DashboardPage();
         },
@@ -45,11 +45,11 @@ class MyApp extends StatelessWidget {
       GoRoute(
         path: '/success',
         builder: (BuildContext context, GoRouterState state) {
-          return SuccessPage();
+          return const SuccessPage();
         },
       ),
       GoRoute(
-        path: '/Cancel',
+        path: '/cancel',
         builder: (BuildContext context, GoRouterState state) {
           return CancelPage();
         },

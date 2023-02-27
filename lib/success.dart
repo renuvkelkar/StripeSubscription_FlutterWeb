@@ -17,7 +17,7 @@ class _SuccessPageState extends State<SuccessPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Success page"),
+        title: const Text("Success page"),
       ),
       body: Center(
         child: Text(

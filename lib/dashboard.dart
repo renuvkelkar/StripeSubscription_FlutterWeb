@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe_web_payment/subscription.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -64,8 +63,6 @@ class _DashboardPage extends State<DashboardPage> {
                           shrinkWrap: true,
                           itemCount: docs.length,
                           itemBuilder: (BuildContext context, int index) {
-                            print("product id");
-                            print(_productId.toString());
                             final doc = docs[index];
                             return RadioListTile(
                               groupValue: _productId,
@@ -77,7 +74,7 @@ class _DashboardPage extends State<DashboardPage> {
                         );
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     Column(
@@ -112,6 +109,7 @@ class _DashboardPage extends State<DashboardPage> {
                                   "cancel_url": 'http://localhost:5600/cancel'
                                 });
                                 setState(() => _checkoutSessionId = docRef.id);
+                                print(_checkoutSessionId.toString());
                               },
                               child: const Text('Subscribe'),
                             ),

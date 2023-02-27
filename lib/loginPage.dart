@@ -2,12 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_stripe_web_payment/dashboard.dart';
-import 'package:flutter_stripe_web_payment/test.dart';
+
 import 'package:flutter_stripe_web_payment/utils/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -17,11 +18,9 @@ class _LoginPageState extends State<LoginPage> {
 
   bool _obscureText = true;
 
-  TextEditingController _nameTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
 
-  TextEditingController _emailTextController = TextEditingController();
-
-  TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
 
   Future<FirebaseApp> _initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
@@ -43,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       const Center(
@@ -57,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 50,
                       ),
                       Image.asset("assets/images/payment.png"),
@@ -70,8 +69,6 @@ class _LoginPageState extends State<LoginPage> {
                     child: Center(
                       child: Container(
                         color: Colors.orangeAccent,
-                        // height: MediaQuery.of(context).size.height,
-                        // width: MediaQuery.of(context).size.height,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -164,12 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                                     email: _emailTextController.text,
                                   );
                                   if (user != null) {
-                                    context.go('/dashBoard');
-                                    // Navigator.of(context).pushReplacement(
-                                    //   MaterialPageRoute(
-                                    //       builder: (context) =>
-                                    //           DashboardPage()),
-                                    // );
+                                    context.go('/dashboard');
                                   }
                                 },
                                 child: const Text(
